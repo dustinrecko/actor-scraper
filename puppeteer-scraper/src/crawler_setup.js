@@ -193,8 +193,8 @@ class CrawlerSetup {
                     args,
                 },
             },
-            useSessionPool: true,
-            persistCookiesPerSession: true,
+            useSessionPool: false,
+            persistCookiesPerSession: false,
             sessionPoolOptions: {
                 persistStateKeyValueStoreId: this.input.sessionPoolName ? SESSION_STORE_NAME : undefined,
                 persistStateKey: this.input.sessionPoolName,
