@@ -240,6 +240,11 @@ class CrawlerSetup {
                 }
             }
 
+            // Static headers
+            if (this.input.extraHttpHeaders && this.input.extraHttpHeaders.length) {
+                await Promise.all(this.input.extraHttpHeaders.map((header) => page.setExtraHTTPHeaders(header)));
+            }
+
             // Disable content security policy.
             if (this.input.ignoreCorsAndCsp) await page.setBypassCSP(true);
 

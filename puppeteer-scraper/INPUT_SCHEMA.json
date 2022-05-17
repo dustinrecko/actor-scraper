@@ -97,6 +97,14 @@
       "prefill": [],
       "editor": "json"
     },
+    "extraHttpHeaders": {
+      "title": "Http Headers",
+      "type": "array",
+      "description": "Add some static headers",
+      "default": [],
+      "prefill": [],
+      "editor": "json"
+    },
     "useChrome": {
       "title": "Use Chrome",
       "type": "boolean",
