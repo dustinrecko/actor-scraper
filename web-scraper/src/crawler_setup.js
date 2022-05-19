@@ -345,6 +345,10 @@ class CrawlerSetup {
         return this._handleResult(request, {}, null, true);
     }
 
+    async waitFor(delay) {
+        return new Promise((resolve) => setTimeout(resolve, delay));
+    }
+
     /**
      * First of all, it initializes the state that is exposed to the user via
      * `pageFunction` context.
@@ -386,8 +390,6 @@ class CrawlerSetup {
             browserHandles: pageContext.browserHandles,
             pageFunctionArguments: {
                 request,
-                page,
-                Apify,
                 proxyInfo,
                 response: {
                     status: response && response.status(),
@@ -442,6 +444,23 @@ class CrawlerSetup {
 
             return replaceAllDatesInObjectWithISOStrings(output);
         }, contextOptions, namespace);
+
+        const pathKey = new URL(request.url).pathname.replace(/[:?&=/]/g, '_');
+
+        let screenshotBuffer = await page.screenshot({ fullPage: true });
+        await this.keyValueStore.setValue(`${pathKey}_DESKTOP`, screenshotBuffer, { contentType: 'image/png' });
+
+        await page.setViewport({
+            width: 375,
+            height: 667,
+            hasTouch: true,
+        });
+        await this.waitFor(2000);
+
+        screenshotBuffer = await page.screenshot({ fullPage: true });
+        await this.keyValueStore.setValue(`${pathKey}_MOBILE`, screenshotBuffer, { contentType: 'image/png' });
+
+        await page.setViewport(DEFAULT_VIEWPORT);
 
         tools.logPerformance(request, 'handlePageFunction USER FUNCTION', startUserFn);
         const finishUserFn = process.hrtime();
