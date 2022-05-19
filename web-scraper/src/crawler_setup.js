@@ -386,6 +386,7 @@ class CrawlerSetup {
             browserHandles: pageContext.browserHandles,
             pageFunctionArguments: {
                 request,
+                page,
                 proxyInfo,
                 response: {
                     status: response && response.status(),
