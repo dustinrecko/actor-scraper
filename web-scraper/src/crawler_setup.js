@@ -387,6 +387,7 @@ class CrawlerSetup {
             pageFunctionArguments: {
                 request,
                 page,
+                Apify,
                 proxyInfo,
                 response: {
                     status: response && response.status(),
